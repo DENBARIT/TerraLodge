@@ -60,8 +60,8 @@ ${(props)=>sizes[props.size]}
 ${(props)=>variations[props.variation]}
 
 ` ;
-Button.defaultProps={
-  variation:"danger",
-  size:"medium"
-}
+// Button.defaultProps={
+//   variation:"danger",
+//   size:"medium"
+// }
 export default Button;

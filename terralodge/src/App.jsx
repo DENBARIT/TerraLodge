@@ -1,42 +1,42 @@
-
-
-import styled from "styled-components";
-
+import { BrowserRouter,Navigate,Route,Routes } from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
+import PageNotFound from "./pages/PageNotFound";
+import Bookings from "./pages/Bookings";
+import Cabins from "./pages/Cabins";
+import Users from "./pages/Users";
+import Settings from "./pages/Settings";
+import Account from "./pages/Account";
+import Login from "./pages/Login";
 import GlobalStyles from "./styles/GlobalStyles";
-import Button from "./ui/Button";
-import Input from "./ui/Input";
-import Heading from "./ui/Heading";
-import Row from "./ui/Row";
-
-const StyledApp=styled.main`
-  /* background-color: oranger ed; */
-  padding: 20px;
-`;
 function App(){
+  return(
+    <>
+    <GlobalStyles/>
+<BrowserRouter>
+<Routes>
+  {/* Replace is required to replace the / path that redirects to dashboard  */}
+<Route  index element={<Navigate replace to="/dashboard" />}/>
 
-return <> 
-<GlobalStyles/>
-<StyledApp>
-  <Row>
- {/* rather than using type since resulting as h1,we can use as  */}
- <Row type="horizontal">
-  <Heading as="h1">The Terra Lodge</Heading>
-<div>
-  <Heading as="h2">Check in and out </Heading>
-<Button onClick={()=>alert("Check In")}>Check in</Button>
-<Button variation="secondary" size="small" onClick={()=>alert("Check Out")}>Check OUT</Button>
-</div>
-</Row>
-<Row>
-  <Heading as="h3">Form </Heading>
-<form>
-<Input placeholder={`"Number of guests"`} type="number"/>
-<Input placeholder={`"Number of guests"`} type="number"/>
-</form>
-</Row>
-</Row>
-</StyledApp>
+
+<Route path="dashboard" element={<Dashboard/>}/>
+<Route path="bookings" element={<Bookings/>}/>
+<Route path="cabins" element={<Cabins/>}/>
+<Route path="users" element={<Users/>}/>
+<Route path="settings" element={<Settings/>}/>
+<Route path="account" element={<Account/>}/>
+<Route path="login" element={<Login/>}/>
+<Route path="*" element={<PageNotFound/>}/>
+
+
+
+</Routes>
+
+
+
+</BrowserRouter>
+
+
 </>
-  
+  )
 }
-export default App;  
+export default App;

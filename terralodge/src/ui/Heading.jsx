@@ -4,7 +4,7 @@ import styled,{css} from "styled-components";
 // const test=css`text-align: center;
 // ${10>5 &&"background-color: red;"}
 // `;
-const test=`text-align:`
+// const test=`text-align: center;`
 const Heading=styled.h1`
 ${props=>props.as==="h1" && css`
    font-size:3rem;
