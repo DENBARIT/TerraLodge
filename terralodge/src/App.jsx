@@ -4,19 +4,15 @@ import styled from "styled-components";
 
 import GlobalStyles from "./styles/GlobalStyles";
 import Button from "./ui/Button";
+import Input from "./ui/Input";
 const H1=styled.h1`
 font-size: 30px;
 font-weight:600;
 background-color: yellow;
 `;
 
-const Input=styled.input`
-border:1px solid var(--color-grey-300);
-border-radius:var(--border-radius-sm);
-background-color:var(--color-grey-300);
- box-shadow:var(--shadow-sm);
-padding:0.8rem 1.2rem;`;
-const StyledApp=styled.div`
+
+const StyledApp=styled.main`
   background-color: orangered;
   padding: 20px;
 `;

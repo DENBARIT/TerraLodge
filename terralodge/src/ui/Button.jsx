@@ -59,5 +59,9 @@ border-radius:var(--border-radius-sm);
 background-color:var(--color-brand-600);
 color:var(--color-brand-50 );
 cursor:pointer;
+/* selecting the button element */
+&:hover{
+    background-color:var(--color-brand-700);
+}
 ` ;
 export default Button;
