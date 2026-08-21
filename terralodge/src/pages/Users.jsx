@@ -1,6 +1,6 @@
-function  PageNotFound(){
-    return (<div>
-        <h1>Page Not Found</h1>
+function  Users(){
+    return(<div>
+        <h1>Users</h1>
     </div>)
 }
-export 
+export default Users;

@@ -7,6 +7,7 @@ import Users from "./pages/Users";
 import Settings from "./pages/Settings";
 import Account from "./pages/Account";
 import Login from "./pages/Login";
+import AppLayout from "./ui/AppLayout";
 import GlobalStyles from "./styles/GlobalStyles";
 function App(){
   return(
@@ -14,9 +15,11 @@ function App(){
     <GlobalStyles/>
 <BrowserRouter>
 <Routes>
-  {/* Replace is required to replace the / path that redirects to dashboard  */}
-<Route  index element={<Navigate replace to="/dashboard" />}/>
 
+<Route element={<AppLayout/>}>
+  {/* Replace is required to replace the / path that redirects to dashboard  */}
+
+<Route  index element={<Navigate replace to="/dashboard" />}/>
 
 <Route path="dashboard" element={<Dashboard/>}/>
 <Route path="bookings" element={<Bookings/>}/>
@@ -24,6 +27,8 @@ function App(){
 <Route path="users" element={<Users/>}/>
 <Route path="settings" element={<Settings/>}/>
 <Route path="account" element={<Account/>}/>
+</Route>
+
 <Route path="login" element={<Login/>}/>
 <Route path="*" element={<PageNotFound/>}/>
 
