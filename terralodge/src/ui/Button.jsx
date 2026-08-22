@@ -40,13 +40,18 @@ const variations = {
   `,
   danger: css`
     color: var(--color-red-100);
-    background-color: var(--color-red-700);
-/* selecting the button element */
-
-    &:hover {
+    background-color: var(--color-red-700);  
+     &:hover {
       background-color: var(--color-red-800);
-    }
+    };
   `,
+/* selecting the button element */
+reset:css`
+color:var(--color-red-100);
+text-color:var(--color-red-700);
+`
+
+  
 };
 
 const Button=styled.button`
@@ -56,8 +61,8 @@ border:none;
 border-radius:var(--border-radius-sm);
 color:var(--color-brand-50 );
 cursor:pointer;
-${(props)=>sizes[props.size]}
-${(props)=>variations[props.variation]}
+${(props)=>sizes[props.$size]}
+${(props)=>variations[props.$variation]}
 
 ` ;
 // Button.defaultProps={

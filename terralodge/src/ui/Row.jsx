@@ -14,7 +14,7 @@ align-items: center;
             flex-direction: column;
             gap:1.6rem;
                 justify-content: space-between;
-                align-items: center;
+                align-items: stretch;
             `
     }
         
