@@ -24,6 +24,6 @@ ${  (props)=>
 `
 }
 background-color: yellow;
-/* ${test} */
+
 `;
 export default Heading;
