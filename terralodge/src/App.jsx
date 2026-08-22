@@ -7,11 +7,22 @@ import Users from "./pages/Users";
 import Settings from "./pages/Settings";
 import Account from "./pages/Account";
 import Login from "./pages/Login";
+import { QueryClient } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import AppLayout from "./ui/AppLayout";
 import GlobalStyles from "./styles/GlobalStyles";
+const queryClient = new QueryClient({
+  defaultOptions:{
+    queries:{
+      staleTime:60*1000,
+    }
+  }
+});
 function App(){
   return(
-    <>
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} position="bottom-right"/>
     <GlobalStyles/>
 <BrowserRouter>
 <Routes>
@@ -41,7 +52,7 @@ function App(){
 </BrowserRouter>
 
 
-</>
+</QueryClientProvider>
   )
 }
 export default App;
