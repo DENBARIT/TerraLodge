@@ -3,6 +3,7 @@ import  {formatCurrency}  from "../../utils/helpers";
 import { useMutation } from "@tanstack/react-query";
 import {deleteCabin} from "../../services/apiCabins";
 import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-hot-toast";
 const TableRow = styled.div`
   display: grid;
   grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
@@ -48,14 +49,13 @@ function CabinRow({cabin}){
     
     // invalidating the row for the query to refetch agian
     onSuccess:()=>{
-      alert("Cabin deleted successfully");
+      toast.success("Cabin deleted successfully");
       queryClient.invalidateQueries({
 queryKey:["cabin"]
-
-      })
+  })
 
     },
-    onError:(err)=>alert(err.message),
+    onError:(err)=>toast.error(err.message),
     
 
 

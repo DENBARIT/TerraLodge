@@ -5,7 +5,7 @@ import Spinner from "../../ui/Spinner";
 import CabinRow from "./CabinRow";
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
-
+/* width:100%; */
   font-size: 1.4rem;
   background-color: var(--color-grey-0);
   border-radius: 7px;
