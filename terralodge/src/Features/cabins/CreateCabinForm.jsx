@@ -49,9 +49,10 @@ import FormRow from "../../ui/FormRow"
 
 function CreateCabinForm() {
   const queryClient=useQueryClient();
-   const {register,handleSubmit,reset,getValues,formState} = useForm();
+   const {register,handleSubmit,reset,getValues,formState,watch} = useForm();
 const {errors}=formState;
-const {mutate,isLoading:isCreating}=useMutation(
+const regularPrice=watch("regularPrice");
+const {mutate,isPending:isCreating}=useMutation(
   { mutationFn:createCabin,
   
 onSuccess:()=>{
@@ -63,7 +64,7 @@ onError:(err)=>toast.error(err.message)
 
 });
    function onSubmit(data){
-    mutate({...data,image:data.image.at(0)});
+    mutate({...data,image:data.image[0]});
    }  
    function onError(error){
     // console.log(error)
@@ -131,11 +132,23 @@ onError:(err)=>toast.error(err.message)
           }
         })} />
       </FormRow> */}
+      <FormRow label="regular price" error={errors?.regularPrice?.message}>
+          <Input type="number" id="regularPrice" {...register("regularPrice",
+        {
+          required:"This field is required",
+          min:{value:1,
+            message:"Capacity should be atleast 1"
+
+          }
+        })}
+         disabled={isCreating}
+         />
+      </FormRow>
       <FormRow label="Discount" error={errors?.discount?.message}>
   <Input type="number" id="discount" defaultValue={0} {...register("discount",
         {
           required:"This field is required",
-          validate:((value)=>value<=getValues().regularPrice||"Discount should be less than the regular price")
+          validate:((value)=>Number(value)<=Number(getValues().regularPrice)||"Discount should be less than the regular price")
         })}   disabled={isCreating} />
       </FormRow>
 

@@ -45,7 +45,7 @@ const Discount = styled.div`
 function CabinRow({cabin}){
   const {id,name,maxCapacity,regularPrice,discount,image}=cabin;
   const queryClient=useQueryClient();
-  const {isLoading:isDeleting,mutate}=useMutation({mutationFn:(id)=>deleteCabin(id),
+  const {isPending:isDeleting,mutate}=useMutation({mutationFn:(id)=>deleteCabin(id),
     
     // invalidating the row for the query to refetch agian
     onSuccess:()=>{
@@ -69,7 +69,7 @@ queryKey:["cabin"]
     <div>Fits upto {maxCapacity} guests</div>
     <Price>{formatCurrency(regularPrice)}</Price>
     <Discount>{formatCurrency(discount)}% off</Discount>
-    <button onClick={()=>mutate(id)}>Delete</button>
+    <button onClick={()=>mutate(id)} disabled={isDeleting}>Delete</button>
   </TableRow>
 }
 export default CabinRow;
