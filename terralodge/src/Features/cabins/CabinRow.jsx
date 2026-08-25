@@ -1,11 +1,8 @@
 import styled from "styled-components";
 import  {formatCurrency}  from "../../utils/helpers";
-import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import CreateCabinForm from "./CreateCabinForm ";
-import {deleteCabin} from "../../services/apiCabins";
-import { useQueryClient } from "@tanstack/react-query";
-import { toast } from "react-hot-toast";
+import { useDeleteCabin } from "../../hooks/useDeleteCabin";
 const TableRow = styled.div`
   display: grid;
   grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
@@ -50,36 +47,36 @@ function CabinRow({cabin}){
 const [showForm,setShowForm]=useState(false);
 
   const {id,name,maxCapacity,regularPrice,discount,image}=cabin;
-  const queryClient=useQueryClient();
-  const {isPending:isDeleting,mutate}=useMutation({mutationFn:(id)=>deleteCabin(id),
+//   const queryClient=useQueryClient();
+//   const {isPending:isDeleting,mutate}=useMutation({mutationFn:(id)=>deleteCabin(id),
     
-    // invalidating the row for the query to refetch agian
-    onSuccess:()=>{
-      toast.success("Cabin deleted successfully");
-      queryClient.invalidateQueries({
-queryKey:["cabin"]
-  })
+//     // invalidating the row for the query to refetch agian
+//     onSuccess:()=>{
+//       toast.success("Cabin deleted successfully");
+//       queryClient.invalidateQueries({
+// queryKey:["cabin"]
+//   })
 
-    },
-    onError:(err)=>toast.error(err.message),
+//     },
+//     onError:(err)=>toast.error(err.message),
     
 
 
 
-  })
+//   })
 
-  
+  const {isDeleting,deleteCabin}=useDeleteCabin();
   return <>
   <TableRow role="row">
     <Img src={image} alt={name} />
     <Cabin>{name}</Cabin>
     <div>Fits upto {maxCapacity} guests</div>
     <Price>{formatCurrency(regularPrice)}</Price>
-    <Discount>{formatCurrency(discount)}% off</Discount>
+    {discount?<Discount>{formatCurrency(discount)}% off</Discount>:<span>&mdash;</span>}
    
    <div>
     <button onClick={()=>setShowForm(!showForm)}>Edit </button>
-    <button onClick={()=>mutate(id)} disabled={isDeleting}>Delete</button>
+    <button onClick={()=>deleteCabin(id)} disabled={isDeleting}>Delete</button>
  </div>
   </TableRow>
 {showForm && <CreateCabinForm cabinToEdit={cabin} />}
