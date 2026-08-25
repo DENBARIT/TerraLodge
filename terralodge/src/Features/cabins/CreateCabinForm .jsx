@@ -9,9 +9,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import {createCabin} from "../../services/apiCabins";
+import {createEditCabin} from "../../services/apiCabins";
 import FormRow from "../../ui/FormRow"
-
 
 
 function CreateCabinForm({cabinToEdit={}}) {
@@ -23,30 +22,52 @@ const isEditSession=Boolean(editId);
 {
 defaultValues:isEditSession?editValues:{}
 }
-
    );
 const {errors}=formState;
 const regularPrice=watch("regularPrice");
-const {mutate,isPending:isCreating}=useMutation(
-  { mutationFn:createCabin,
+const {mutate:createCabin,isPending:isCreating}=useMutation(
+  { mutationFn:(newCabin)=>createEditCabin(newCabin),
   
 onSuccess:()=>{
   toast.success("Cabin created successfully");
  queryClient.invalidateQueries({queryKey:["cabin"] });
    reset();
 },
+
+onError:(err)=>toast.error(err.message),
+
+});
+  
+
+
+
+   const {mutate:editCabin,isPending:isEditing}=useMutation(
+  { mutationFn:({newCabinData,id})=>createEditCabin(newCabinData,id),
+  
+onSuccess:()=>{
+  toast.success("Cabin  successfully edited");
+ queryClient.invalidateQueries({queryKey:["cabin"] });
+   reset();
+},
 onError:(err)=>toast.error(err.message)
 
 });
+
+const isWorking=isCreating||isEditing;
+
+
    function onSubmit(data){
-    mutate({...data,image:data.image[0]});
-   }  
+    const image=typeof data.image==="string"?data.image:data.image[0];
+    if(isEditSession)editCabin({newCabinData:{...data,image:image},id:editId});
+    else createCabin({...data,image:image})
+
+   }
    function onError(error){
     // console.log(error)
    }
   return (
     <Form  onSubmit={handleSubmit(onSubmit,onError)}>
-   {/* <FormRow> 
+   {/* <FormRow>
         <Label htmlFor="name">Cabin name</Label>
         <Input type="text" id="name" {...register("name",
         {
@@ -64,7 +85,7 @@ onError:(err)=>toast.error(err.message)
           required:"This field is required",
         }
         )} 
-        disabled={isCreating}
+        disabled={isWorking}
         />
 
 </FormRow>
@@ -91,7 +112,7 @@ onError:(err)=>toast.error(err.message)
         }
 
         )}
-          disabled={isCreating}
+          disabled={isWorking}
         /> 
 
       </FormRow>
@@ -116,7 +137,7 @@ onError:(err)=>toast.error(err.message)
 
           }
         })}
-         disabled={isCreating}
+         disabled={isWorking}
          />
       </FormRow>
       <FormRow label="Discount" error={errors?.discount?.message}>
@@ -124,7 +145,7 @@ onError:(err)=>toast.error(err.message)
         {
           required:"This field is required",
           validate:((value)=>Number(value)<=Number(getValues().regularPrice)||"Discount should be less than the regular price")
-        })}   disabled={isCreating} />
+        })}   disabled={isWorking} />
       </FormRow>
 
       {/* <FormRow>
@@ -153,7 +174,13 @@ onError:(err)=>toast.error(err.message)
       </FormRow> */}
 
 <FormRow label="Cabin photo">
- <FileInput id="image" accept="image/*"  {...register("image")}  disabled={isCreating}/>
+ <FileInput id="image" accept="image/*"  {...register("image",
+
+{
+  required:isEditSession?false:"This field is required",
+}
+
+ )}  disabled={isCreating}/>
 </FormRow>
       {/* <FormRow>
         <Label htmlFor="image">Cabin photo</Label>
@@ -166,7 +193,7 @@ onError:(err)=>toast.error(err.message)
           Cancel
         </Button>
         <Button $variation="primary" $size="medium" disabled={isCreating} type="submit">
-          Add cabin
+          {isEditSession ? "Edit cabin" : "Add cabin"}
         </Button>
       </FormRow>
     </Form>
