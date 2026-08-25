@@ -52,18 +52,8 @@ function CreateCabinForm() {
    const {register,handleSubmit,reset,getValues,formState,watch} = useForm();
 const {errors}=formState;
 const regularPrice=watch("regularPrice");
-const {mutate,isPending:isCreating}=useMutation(
-  { mutationFn:createCabin,
-  
-onSuccess:()=>{
-  toast.success("Cabin created successfully");
- queryClient.invalidateQueries({queryKey:["cabin"] });
-   reset();
-},
-onError:(err)=>toast.error(err.message)
 
-});
-   function onSubmit(data){
+function onSubmit(data){
     mutate({...data,image:data.image[0]});
    }  
    function onError(error){

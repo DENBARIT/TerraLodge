@@ -11,7 +11,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import {createEditCabin} from "../../services/apiCabins";
 import FormRow from "../../ui/FormRow"
-
+import { useCreateCabin } from "../../hooks/useCreateCabin";
 
 function CreateCabinForm({cabinToEdit={}}) {
 const {id:editId,...editValues}=cabinToEdit;
@@ -25,20 +25,21 @@ defaultValues:isEditSession?editValues:{}
    );
 const {errors}=formState;
 const regularPrice=watch("regularPrice");
-const {mutate:createCabin,isPending:isCreating}=useMutation(
-  { mutationFn:(newCabin)=>createEditCabin(newCabin),
+// const {mutate:createCabin,isPending:isCreating}=useMutation(
+//   { mutationFn:(newCabin)=>createEditCabin(newCabin),
   
-onSuccess:()=>{
-  toast.success("Cabin created successfully");
- queryClient.invalidateQueries({queryKey:["cabin"] });
-   reset();
-},
+// onSuccess:()=>{
+//   toast.success("Cabin created successfully");
+//  queryClient.invalidateQueries({queryKey:["cabin"] });
+//    reset();
+// },
 
-onError:(err)=>toast.error(err.message),
+// onError:(err)=>toast.error(err.message),
 
-});
+// });
   
 
+const {createCabin,isCreating}=useCreateCabin();
 
 
    const {mutate:editCabin,isPending:isEditing}=useMutation(
@@ -57,9 +58,13 @@ const isWorking=isCreating||isEditing;
 
 
    function onSubmit(data){
+    console.log("onsubbmit");
     const image=typeof data.image==="string"?data.image:data.image[0];
-    if(isEditSession)editCabin({newCabinData:{...data,image:image},id:editId});
-    else createCabin({...data,image:image})
+    if(isEditSession)editCabin({newCabinData:{...data,image:image},id:editId},{
+      onSuccess:(data)=>reset()
+    });
+    else createCabin({...data,image:image},{onSuccess:(data)=>reset()});
+    console.log(data.image);
 
    }
    function onError(error){
