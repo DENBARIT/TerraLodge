@@ -1,6 +1,12 @@
-function  Settings(){
-    return(<div>
-        <h1>Settings</h1>
-    </div>)
-}
+import UpdateSettingsForm from "../Features/settings/UpdateSettingsForm";
+import Heading from "../ui/Heading";
+import Row from "../ui/Row";
+function Settings() {
+  return <Row>
+    <Heading as="h1">Update hotel settings</Heading>
+  <UpdateSettingsForm/>
+
+</Row>}
+
 export default Settings;
+

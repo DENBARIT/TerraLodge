@@ -23,7 +23,7 @@ ${  (props)=>
     font-weight: 600;
 `
 }
-background-color: yellow;
+background-color: #00a6ff;
 
 `;
 export default Heading;
