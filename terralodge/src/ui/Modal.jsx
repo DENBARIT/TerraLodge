@@ -1,6 +1,11 @@
 import styled from "styled-components";
 import { HiXMark } from "react-icons/hi2";
 import { createPortal } from "react-dom";
+import { useState } from "react";
+import { createContext } from "react";
+import { useContext } from "react";
+import { cloneElement } from "react";
+import useOutsideClick from "../hooks/useOutsideClick";
 const StyledModal = styled.div`
   position: fixed;
   top: 50%;
@@ -48,16 +53,60 @@ const Button = styled.button`
     stroke: var(--color-grey-500); */
     color: var(--color-grey-500);
   }
-`;
-function Modal({children, onClose}) {
+`; const ModalContext = createContext();
+function Modal({ children }) {
+const [openName,setOpenName]=useState('');
+const closeModal=()=>setOpenName('');
+const OpenModal=setOpenName;
+return <ModalContext.Provider value={{openName,closeModal,OpenModal}}>
+    {children}
+</ModalContext.Provider>
+}
+function ModalOpen({opens:opensWindowName,children}){
+const {OpenModal}=useContext(ModalContext);
+// to add the openModal to the button we use cloneElement
+return cloneElement(children,{onClick:()=>OpenModal(opensWindowName)});
+}
+ function ModalWindow({children,name}) {
+  const {openName,closeModal}=useContext(ModalContext);
+ 
+  // using customhooks for closing the modal
+const ref=useOutsideClick(closeModal);
+
+  if(openName!==name) return null;
+  // to prevent parent overflow,z-index
     return createPortal(
       <Overlay>
-        <StyledModal>
-          <Button onClick={onClose}><HiXMark/></Button>
-          <div>{children}</div>
+        <StyledModal ref={ref}>
+          <Button onClick={closeModal}><HiXMark/></Button>
+          <div>{cloneElement(children,{onClose:closeModal})}</div>
         </StyledModal>
       </Overlay>,
       document.body
     );
 }
+
+
+Modal.Open=ModalOpen;
+Modal.Window=ModalWindow;
+
+
+
+
+
+
+
+
+// Modal window withclose button and overlay
+// function Modal({children, onClose}) {
+//     return createPortal(
+//       <Overlay>
+//         <StyledModal>
+//           <Button onClick={onClose}><HiXMark/></Button>
+//           <div>{children}</div>
+//         </StyledModal>
+//       </Overlay>,
+//       document.body
+//     );
+// }
 export default Modal;
