@@ -7,8 +7,9 @@ import Button from "../ui/Button";
 import { useState } from "react";
 import CabinTable from "../Features/cabins/CabinTables";
 import CreateCabinForm from "../Features/cabins/CreateCabinForm ";
+import AddCabin from "../Features/cabins/AddCabin";
 function  Cabins(){
-    const [showForm,setShowForm]=useState(false);
+    // const [showForm,setShowForm]=useState(false);
     // useEffect(function(){
     //     getCabins().then((data)=>console.log(data))
     // })
@@ -22,8 +23,7 @@ function  Cabins(){
 <Row type="vertical" >
     <CabinTable/>
     {/* used $ to remove the dom warning for styled button props */}
-    <Button $size="medium" $variation="primary" onClick={() => setShowForm((show) => !show)}>Add new  Cabin</Button>
-    {showForm && <CreateCabinForm/>}
+    <AddCabin/>
 </Row>
 </>)
 }

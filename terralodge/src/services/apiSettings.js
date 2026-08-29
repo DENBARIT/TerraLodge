@@ -10,12 +10,12 @@ const  { data: Settings, error } = await supabase
   }
   return Settings;
 }
-export async function updateSettings(newSettings) {
+export async function updateSettingApi(newSettings) {
 
 const { data, error } = await supabase
   .from('Settings')
-  .update({ other_column: 'otherValue' })
-  .eq('some_column', 'someValue')
+  .update(newSettings)
+  .eq('id', 1)
   .select()
 
   if(error){

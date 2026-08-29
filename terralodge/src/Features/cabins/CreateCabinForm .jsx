@@ -14,7 +14,7 @@ import { useEditCabin } from "./hooks/useEditCabin";
 import FormRow from "../../ui/FormRow"
 import { useCreateCabin } from "./hooks/useCreateCabin";
 
-function CreateCabinForm({cabinToEdit={}}) {
+function CreateCabinForm({cabinToEdit={},onClose}) {
 const {id:editId,...editValues}=cabinToEdit;
 const isEditSession=Boolean(editId);
   const {createCabin,isCreating}=useCreateCabin();
@@ -51,9 +51,16 @@ const isWorking=isCreating||isEditing;
 
     const image=typeof data.image==="string"?data.image:data.image[0];
     if(isEditSession)editCabin({newCabinData:{...data,image:image},id:editId},{
-      onSuccess:(data)=>reset()
+      onSuccess:(data)=>{reset();
+        onClose?.();
+      },
+      onError:(error)=>toast.error(error.message)
     });
-    else createCabin({...data,image:image},{onSuccess:(data)=>reset()});
+    else createCabin({...data,image:image},{onSuccess:(data)=>{reset();
+
+
+        onClose?.()}
+    });
     console.log(data.image);
 
    }
@@ -61,7 +68,8 @@ const isWorking=isCreating||isEditing;
     // console.log(error)
    }
   return (
-    <Form  onSubmit={handleSubmit(onSubmit,onError)}>
+    <Form  onSubmit={handleSubmit(onSubmit,onError)}
+    type={onClose?"modal":"regular"}>
    {/* <FormRow>
         <Label htmlFor="name">Cabin name</Label>
         <Input type="text" id="name" {...register("name",
@@ -184,7 +192,7 @@ const isWorking=isCreating||isEditing;
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button $variation="secondary" $size="medium" type="reset">
+        <Button $variation="secondary" $size="medium" type="reset" onClick={()=>onClose?.()}>
           Cancel
         </Button>
         <Button $variation="primary" $size="medium" disabled={isCreating} type="submit">

@@ -19,7 +19,6 @@ const sizes = {
     font-weight: 500;
   `,
 };
-
 const variations = {
   primary: css`
     color: var(--color-brand-50);
