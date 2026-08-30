@@ -6,17 +6,18 @@ import { useCreateCabin } from "./hooks/useCreateCabin";
 import { HiPencil,HiTrash,HiSquare2Stack } from "react-icons/hi2";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
-const TableRow = styled.div`
-  display: grid;
-  grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
-  column-gap: 2.4rem;
-  align-items: center;
-  padding: 1.4rem 2.4rem;
+import Table from "../../ui/Table";
+// const TableRow = styled.div`
+//   display: grid;
+//   grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
+//   column-gap: 2.4rem;
+//   align-items: center;
+//   padding: 1.4rem 2.4rem;
 
-  &:not(:last-child) {
-    border-bottom: 1px solid var(--color-grey-100);
-  }
-`;
+//   &:not(:last-child) {
+//     border-bottom: 1px solid var(--color-grey-100);
+//   }
+// `;
 
 const Img = styled.img`
   display: block;
@@ -79,8 +80,9 @@ const {isCreating,createCabin}=useCreateCabin();
     })
   }
 
-  
-  return <TableRow role="row">
+    //  <Table.Row role="row">
+  return <Table.Row>
+
     <Img src={image} alt={name} />
     <Cabin>{name}</Cabin>
     <div>Fits upto {maxCapacity} guests</div>
@@ -119,7 +121,7 @@ const {isCreating,createCabin}=useCreateCabin();
  
  
  </div>
-  </TableRow>
+  </Table.Row>
   
 }
 export default CabinRow;
