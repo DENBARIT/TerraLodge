@@ -21,9 +21,11 @@ ${  (props)=>
     props.as==="h3"&&css`
     font-size: 2rem;
     font-weight: 600;
+    ;
+    /* background-color: #e4e9ec; */
 `
 }
-background-color: #00a6ff;
+/* background-color: #00a6ff; */
 
 `;
 export default Heading;

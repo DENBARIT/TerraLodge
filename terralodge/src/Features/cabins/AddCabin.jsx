@@ -25,21 +25,25 @@ import Modal from "../../ui/Modal";
 
 // Implementation of AddCabin component with compund components pattern
 function AddCabin(){
-    return <Modal>
+    return (<div>
+        <Modal>
  <Modal.Open opens="cabin-form">
  <Button  type="button"  $variation="primary" $size="medium"> Add new cabin</Button>
 </Modal.Open> 
 <Modal.Window name="cabin-form">
     <CreateCabinForm />
     </Modal.Window>
+    
+
+    
     <Modal.Open opens="table">
- <Button  type="button"  $variation="primary" $size="medium"> Show Table</Button>
+ <Button  type="button"  $variation="primary" $size="medium" > Show Table</Button>
 </Modal.Open> 
 <Modal.Window name="table">
     <CabinTable />
     </Modal.Window>
     
-    </Modal>
+    </Modal></div>)
 
 }
 export default AddCabin;
