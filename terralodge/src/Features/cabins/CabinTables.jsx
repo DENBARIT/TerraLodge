@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Spinner from "../../ui/Spinner";
 import { useCabins } from "./hooks/useCabins";
 import CabinRow from "./CabinRow";
+import Menus from "../../ui/Menus";
 import Table from "../../ui/Table";
 // const Table = styled.div`
 //   border: 1px solid var(--color-grey-200);
@@ -36,7 +37,9 @@ const {cabins,isLoading,error}=useCabins();
     if(isLoading) return <Spinner/>
     
 
-    return <Table columns="0.6fr 1.8fr 2.2fr 1fr 1fr 1fr">
+    return (<Menus>
+
+   <Table columns="0.6fr 1.8fr 2.2fr 1fr 1fr 1fr">
 
 {/* <TableHeader role="row"> */}
 <Table.Header>
@@ -51,11 +54,9 @@ const {cabins,isLoading,error}=useCabins();
 cabins.map((cabin)=><CabinRow key={cabin.id} cabin={cabin}/>)
 
 } */}
-<Table.Body data="cabins" render={(cabin) => <CabinRow key={cabin.id} cabin={cabin}/>} />
-
-
-
+<Table.Body data={cabins} render={(cabin) => <CabinRow key={cabin.id} cabin={cabin}/>} />
     </Table>
+</Menus>)
 }
 
 
