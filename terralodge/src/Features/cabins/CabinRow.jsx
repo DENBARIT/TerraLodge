@@ -90,7 +90,7 @@ const {isCreating,createCabin}=useCreateCabin();
     <Price>{formatCurrency(regularPrice)}</Price>
     {discount?<Discount>{formatCurrency(discount)}% off</Discount>:<span>&mdash;</span>}
    
-   <div style={{display:"flex",justifyContent:"flex-end",alignItems:"center",gap:"0.6rem"}}>
+   <div style={{display:"flex",justifyContent:"flex-start",alignItems:"center",gap:"0.6rem"}}>
     
     
 <Modal>
