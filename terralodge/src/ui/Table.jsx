@@ -6,6 +6,7 @@ const StyledTable = styled.div`
   font-size: 1.4rem;
   background-color: var(--color-grey-0);
   border-radius: 7px;
+  padding-left: 1rem ;
   overflow: hidden;
 `;
 
@@ -86,7 +87,7 @@ function Body({data,render}) {
   if (!data || data.length === 0) {
     return <Empty>No data available</Empty>;
   }
-return <StyledBody role="row">
+return <StyledBody role="rowgroup">
   {data.map(render)}
 </StyledBody>
 }
