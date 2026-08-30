@@ -7,6 +7,7 @@ import { HiPencil,HiTrash,HiSquare2Stack } from "react-icons/hi2";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import Table from "../../ui/Table";
+import Menus from "../../ui/Menus";
 // const TableRow = styled.div`
 //   display: grid;
 //   grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
@@ -89,38 +90,46 @@ const {isCreating,createCabin}=useCreateCabin();
     <Price>{formatCurrency(regularPrice)}</Price>
     {discount?<Discount>{formatCurrency(discount)}% off</Discount>:<span>&mdash;</span>}
    
-   <div>
+   <div style={{display:"flex",justifyContent:"flex-end",alignItems:"center",gap:"0.6rem"}}>
     
-    <button onClick={handleDuplicate} disabled={isCreating}><HiSquare2Stack/> </button>
-
+    
 <Modal>
+<Menus.Menu>
+  <Menus.Toggle id={cabin.id}/>
+  <Menus.List id={cabin.id}>
+    <Menus.Button icon={<HiSquare2Stack/>} onClick={handleDuplicate}>Duplicate</Menus.Button>
+ 
   <Modal.Open opens="edit-cabin">
-    <button>
-      <HiPencil/>
-    </button>
+<Menus.Button icon={<HiPencil/>}>Edit</Menus.Button>
 </Modal.Open>
 
-<Modal.Window name="edit-cabin">
-  <CreateCabinForm cabinToEdit={cabin} />
-  </Modal.Window>
-  
   <Modal.Open opens="delete-cabin">
    
-     <button disabled={isDeleting}> <HiTrash/>  </button>
-   
+    <Menus.Button icon={<HiTrash/>}>Delete</Menus.Button>
       
   </Modal.Open>
 
-   <Modal.Window name="delete-cabin">
+ 
+  
+  </Menus.List>
+    <Modal.Window name="edit-cabin">
+  <CreateCabinForm cabinToEdit={cabin} />
+  </Modal.Window>
+ 
+ 
+      <Modal.Window name="delete-cabin">
 
 <ConfirmDelete  resourceName="cabin" disabled={isDeleting}  onConfirm={()=>deleteCabin(id)}/>
    </Modal.Window> 
-    
-    
- </Modal>
- 
+</Menus.Menu>
+
+</Modal>
  
  </div>
+
+
+
+
   </Table.Row>
   
 }
